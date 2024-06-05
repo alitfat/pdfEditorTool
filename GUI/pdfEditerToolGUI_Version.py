@@ -8,7 +8,7 @@ class pdfEditorTool_VerGUI(QWidget):
         self.resize(300, 90)
         
         layout = QFormLayout()
-        self.lbVer = QLabel("Version   \t：3.6.6\n" + 
+        self.lbVer = QLabel("Version   \t：3.6.9\n" + 
                             "Created by \t：GaoHongyu\n" + 
                             "MailAddress\t：alitfat142@gmail.com\n" + 
                             "Created at \t：自宅")
