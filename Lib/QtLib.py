@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import QDialog, QTextEdit, QListWidget, QMessageBox, QWidge
 from PyQt5.QtGui import QDropEvent, QFocusEvent,QDragEnterEvent
 
 from Lib.FileSysProcess import FileSysProcess
-from Lib.config.xmlLib.xmlQtBoxLib import xmlQtBoxLibConfig
+from config.xmlLib.xmlQtBoxLib import xmlQtBoxLibConfig
         
 class qtBoxLib(QDialog):
     
@@ -16,7 +16,7 @@ class qtBoxLib(QDialog):
         self.qMsgButton = QMessageBox.StandardButton.Ok
         self.fsps = FileSysProcess()
         self.msg = QMessageBox()
-        xmlQtBoxLibConfigDir = os.path.join(os.getcwd(), "Lib", "config")
+        xmlQtBoxLibConfigDir = os.path.join(os.getcwd(), "config")
         self.xmlQtBoxLib = xmlQtBoxLibConfig(xmlQtBoxLibConfigDir)
         self.xmlQtBoxLib.getConfigSetting()
         self.xmlQtBoxLib.outputConfigSetting()
@@ -100,6 +100,22 @@ class qtBoxLib(QDialog):
 
         return self.GetFileNameByFileDialog( objFullFileAddr, fileDialogTitle, fileFilter, objClass )
 
+    def GeExcelFileName(self, objFullFileAddr : str, objClass: QWidget|None = None) -> str:
+        """
+        ------------------------------------------------------------
+        対象Excelファイルアドレス取得処理\n
+        【引数 】\n
+            objFullFileAddr:デフォルトファイルアドレス\n
+            objClass:QWidget対象\n
+        【戻り値】\n
+            str:ファイルアドレス文字列\n
+        ------------------------------------------------------------
+        """
+        fileDialogTitle = "Select Excel File"
+        fileFilter = "Excel File(*.xls *.xlsx *.xlsm);;"
+        fileFilter += "All Files( *.*)"
+
+        return self.GetFileNameByFileDialog( objFullFileAddr, fileDialogTitle, fileFilter, objClass )
 
     def GetPdfFileName(self, objFullFileAddr : str, objClass: QWidget|None = None) -> str:
         """
@@ -118,6 +134,23 @@ class qtBoxLib(QDialog):
 
         return self.GetFileNameByFileDialog( objFullFileAddr, fileDialogTitle, fileFilter, objClass )
 
+
+    def GetBinFileName(self, objFullFileAddr : str, objClass: QWidget|None = None) -> str:
+        """
+        --------------------------------------------------
+        対象CSVファイルアドレス取得処理\n
+        【引数 】\n
+            objFullFileAddr:デフォルトファイルアドレス\n
+            objClass:QWidget対象\n
+        【戻り値】\n
+            str:ファイルアドレス文字列\n
+        --------------------------------------------------
+        """
+        fileDialogTitle = "Select Bin File"
+        fileFilter = "Bin File(*.bin *.rom);;"
+        fileFilter += "All Files( *.*)"
+
+        return self.GetFileNameByFileDialog( objFullFileAddr, fileDialogTitle, fileFilter, objClass )
 
     def GetCsvFileName(self, objFullFileAddr : str, objClass: QWidget|None = None) -> str:
         """
@@ -353,7 +386,45 @@ class qtBoxLib(QDialog):
             return False
         
         return True
-    
+
+    def judgeHexCharacter(self, strCharacter : str, 
+                              msgTitle : str = "judge Illegal Character", 
+                              lbName: str = "") -> bool:
+        """
+        ------------------------------------------------------------------------------
+         十六進数アルファベット存在判定処理\n
+        【引数 】\n
+            strCharacter:対象アルファベット文字列\n
+            msgTitle:メッセージボックスタイトル
+            lbName:ラベル名称
+        【戻り値】存在判定結果\n
+            注: 十六進数以外の場合、\n
+                エラーメッセージボックス出力\n
+        ------------------------------------------------------------------------------ 
+        """
+
+        strCharacter = strCharacter.strip(" ")
+        if ( len(strCharacter)  == 0 ) :
+            msgStr = self.xmlQtBoxLib.logList.logNoCommentText
+            msgStr = msgStr.replace('__titleName__',lbName)
+            self.showErrMsgBoxInfo(msgTitle, msgStr)
+            return False
+        
+        bResult:bool =  True
+        try:
+             int(strCharacter, 16)
+        except Exception as e:
+            bResult = False
+        
+        if bResult == False :
+            msgStr = self.xmlQtBoxLib.logList.logIllegalCharText
+            msgStr = msgStr.replace('__titleName__',lbName)
+            msgStr = msgStr.replace('__IllegalChar__',strCharacter)
+            self.showErrMsgBoxInfo(msgTitle, msgStr)
+            return False
+        
+        return True
+
     def delFile(self, fileAddr : str, msgTitle : str = "del File") -> bool:
         """
         -----------------------------------------------------------------
@@ -555,3 +626,7 @@ class qtListWidget(QListWidget):
         else :
             event.ignore()
         return
+
+
+
+

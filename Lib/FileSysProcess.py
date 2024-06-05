@@ -120,7 +120,7 @@ class FileSysProcess():
         """
         bResult:bool = os.path.isfile(fullFileAddr)  
         return bResult
-
+    
     def judgeFilesExsit(self, fullFilesAddr: list[str], flag:bool|None = None) -> list[tuple[bool, str]]:
         """
         -----------------------------------------------------------------
@@ -260,7 +260,31 @@ class FileSysProcess():
         except Exception as e:
             bResult = False
         return bResult
-    
+
+    def getBinFileComment(self, fileFullAddr: str, startAddr:int = -1, MemorySize:int = -1) -> bytes|None:
+        """
+        ------------------------------------------
+        バイナルファイル内容取得処理\n
+        【引数 】\n
+            fileFullAddr:ファイルアドレス\n
+            fileDataList:ファイル内容の格納場所\n
+            startAddr:開始アドレス\n
+            MemorySize:メモリサイズ\n
+        【戻り値】処理結果\n
+        ------------------------------------------
+        """
+        try:
+            file = open(fileFullAddr, 'rb')
+            if startAddr == -1 and MemorySize == -1 :
+                fileData = file.read()
+            else:
+                fileData = file.read(startAddr + MemorySize + 1)
+                fileData = fileData[startAddr:startAddr + MemorySize]
+            file.close()
+        except Exception as e:
+            fileData = None
+        return fileData
+
     def writeFileComment(self, fileFullAddr: str, fileDataList:list[str]) -> bool:
         """
         ------------------------------------------
