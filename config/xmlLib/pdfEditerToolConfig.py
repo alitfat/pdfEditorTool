@@ -137,9 +137,10 @@ class menubarList(xmlLib):
 class xmlQEncryptButton(xmlQRadioButton):
     label:dict[str, str]= {}  
     def __init__(self, labelName = "", text="", bEnabled = True, bHidden = False, strEncrypt = "", strEncrypt2 = "", qtObj:QRadioButton|None = None)-> None:
-        super(xmlQEncryptButton, self).__init__(labelName, text, bEnabled, bHidden,qtObj=qtObj)
+        super(xmlQEncryptButton, self).__init__(labelName, text, False, bEnabled, bHidden,qtObj=qtObj)
         self.label["Encrypt"] = strEncrypt
         self.label["Encrypt2"] = strEncrypt2
+        self.delLabelProperty('Checked')
         return
 
 class encryptButtonList(xmlLib):
@@ -915,8 +916,7 @@ class actionToolList(xmlLib):
         
         
         #gbEncrypt
-        gbEncrypt =  xmlQGroupBox(self.gbEncryptName)
-        gbEncrypt.addLabelProperty("gbEncryptName", self.gbEncryptNameList[index])
+        gbEncrypt =  xmlQGroupBox(self.gbEncryptName, self.gbEncryptNameList[index])
         gbEncrypt.addLabelProperty("gbEncryptRbIndex", self.gbEncryptRbIndex[index])
         self.gbEncryptList.append(gbEncrypt)
         
@@ -1063,7 +1063,7 @@ class actionToolList(xmlLib):
     def updateConfigSetting(self, pdfEditerUi:Ui_pdfEditerToolGUI, index:int  = 0 ) -> None:
 
         #lbObjFileName
-        self.txObjFileNameList[index].updateConfigSetting(pdfEditerUi.lbObjFileName)
+        self.lbObjFileNameList[index].updateConfigSetting(pdfEditerUi.lbObjFileName)
         #txObjFileName
         self.txObjFileNameList[index].updateConfigSetting(pdfEditerUi.txObjFileName)
         #btObjFileName
@@ -1112,7 +1112,6 @@ class actionToolList(xmlLib):
 
         #gbEncrypt
         self.gbEncryptList[index].updateConfigSetting(pdfEditerUi.gbEncrypt)
-        self.gbEncryptList[index].addLabelProperty("gbEncryptName",pdfEditerUi.gbEncrypt.title())
 
         #暗号なし
         if (pdfEditerUi.rbEncrypt00.isChecked()):
@@ -1254,7 +1253,6 @@ class actionToolList(xmlLib):
 
         #gbEncrypt
         self.gbEncryptList[index].updateGUISetting(pdfEditerUi.gbEncrypt)
-        pdfEditerUi.gbEncrypt.setTitle(self.gbEncryptList[index].getLabelValue("gbEncryptName", self.gbEncryptNameList[index]))
         self.gbEncryptRbIndex[index] = int(self.gbEncryptList[index].getLabelValue("gbEncryptRbIndex"))
         
         #rb Checked設定
@@ -1416,7 +1414,7 @@ class pdfEditerToolConfig():
         super(pdfEditerToolConfig, self).__init__()
         self.FSP = FileSysProcess()
         #self.pdfETConfig = pdfEditerToolConfig(os.getcwd() + "\Jp\pdfEditerToolGUI_Jp.xml",self)
-        self.CreateFileAddress = configFileAddress + "\\config.xml"
+        self.CreateFileAddress = configFileAddress + "\\pdfEditerToolGUI_Jp.xml"
         if self.FSP.judgeFileExsit(self.CreateFileAddress) :
             self.configFileAddress = self.CreateFileAddress
         else :

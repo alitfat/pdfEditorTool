@@ -577,7 +577,7 @@ class pdfInfoConfig():
     def __init__(self, configFileAddress:str, PdfInfoSetting:pdfEditorTool_PdfInfoSetting)-> None:
         super(pdfInfoConfig, self).__init__()
         self.FSP = FileSysProcess()
-        self.CreateFileAddress = configFileAddress + "\\config1.xml"
+        self.CreateFileAddress = configFileAddress + "\\PdfInfoSetting_Jp.xml"
         if self.FSP.judgeFileExsit(self.CreateFileAddress) :
             self.configFileAddress = self.CreateFileAddress
         else :

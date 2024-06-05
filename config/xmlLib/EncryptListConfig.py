@@ -1936,7 +1936,7 @@ class EncryptListConfig():
     def __init__(self, configFileAddress:str, PdfInfoSetting:EncryptListUi)-> None:
         super(EncryptListConfig, self).__init__()
         self.FSP = FileSysProcess()
-        self.CreateFileAddress = configFileAddress + "\\config2.xml"
+        self.CreateFileAddress = configFileAddress + "\\EncryptListSetting_Jp.xml"
         if self.FSP.judgeFileExsit(self.CreateFileAddress) :
             self.configFileAddress = self.CreateFileAddress
         else :

@@ -486,7 +486,7 @@ class ExcelSheetSelectConfig():
     def __init__(self, configFileAddress:str, ui:ExcelSheetSelecttUI)-> None:
         super(ExcelSheetSelectConfig, self).__init__()
         self.FSP = FileSysProcess()
-        self.CreateFileAddress = configFileAddress + "\\config3.xml"
+        self.CreateFileAddress = configFileAddress + "\\ExcelSheetSelectSetting_Jp.xml"
         if self.FSP.judgeFileExsit(self.CreateFileAddress) :
             self.configFileAddress = self.CreateFileAddress
         else :

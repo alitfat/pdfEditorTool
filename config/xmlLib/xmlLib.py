@@ -23,7 +23,7 @@ class xmlLib(object):
     def __init__(self)-> None:
         super(xmlLib, self).__init__()
         return
-        
+    
     def findElement(self, eleTree:ElementTree|Element, eleFindtr:str, eleDefaultTree:ElementTree|Element|None = None) -> ElementTree|Element|None:
         element = eleTree.find(eleFindtr)
         if element is None:
@@ -31,6 +31,21 @@ class xmlLib(object):
         else :
             return element
     
+    def judgeEleTagDict(self, element:Element, eleTagDict:dict[str, str])->bool:
+        bResult = False
+        childData:dict[str, str] = {}
+        if len(element.items()) == 0:
+            return bResult
+        for eleName,eleValue in element.items():
+             childData[eleName] = eleValue
+        for childName, childValue in eleTagDict.items():
+            if childName not in childData:
+                return bResult
+            if childValue != childData[childName]:
+                return bResult
+        bResult = True
+        return bResult
+
     class getEleText(convertStr):
         strValue:str
         def __init__(self, eleTree:ElementTree|Element, eleLabelName:str, defalutEleLabelName:bool|int|str = "")-> None:
@@ -76,3 +91,23 @@ class xmlLib(object):
         eleSubElement = ET.SubElement(eleElement, eleSubElementName)
         return eleSubElement
 
+    def judgeElement(self, eleElement:Element, eleTagNme:str, eleTagDict:dict[str, str]|None = None)->bool:
+        if eleElement.tag != eleTagNme :
+            return False
+        if eleTagDict is None :
+            return True
+        for eleTagName, eleTagValue in eleTagDict.items():
+            eleElementValue = eleElement.get(eleTagName, None)
+            if eleElementValue == None:
+                return False
+            if eleElementValue != eleTagValue:
+                return False
+        return True
+
+    def removeElement(self, eleElement:Element, eleTagNme:str)-> None:
+        for eleSubElement in eleElement:
+            if eleSubElement.tag == eleTagNme:
+                eleElement.remove(eleSubElement)
+                continue
+            self.removeElement(eleSubElement, eleTagNme)
+        return

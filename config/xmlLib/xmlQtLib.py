@@ -94,7 +94,7 @@ class xmlQt(xmlLib):
                         self.label[labelName] = qtObj.text().replace("\n","\\n")
 
                 case "Title":
-                    if isinstance(qtObj, QMenu) :
+                    if isinstance(qtObj, QMenu|QGroupBox) :
                         self.label[labelName] = qtObj.title().replace("\n","\\n")
 
                 case "WindowTitle":
@@ -103,7 +103,7 @@ class xmlQt(xmlLib):
                     
                 case "Enabled": self.label[labelName] = str(qtObj.isEnabled())
                 case "Hidden":
-                    if isinstance(qtObj, (QMenu|QTextEdit|QLabel|QPushButton|QCheckBox|QGroupBox|QComboBox|QRadioButton|QListWidget)) :
+                    if isinstance(qtObj, (QMenu|QTextEdit|QLabel|QPushButton|QCheckBox|QGroupBox|QComboBox|QRadioButton|QListWidget|QGroupBox)) :
                         self.label[labelName] = str(qtObj.isHidden())
                 case "Checked":
                     if isinstance(qtObj, (QCheckBox,QRadioButton)) :
@@ -126,7 +126,7 @@ class xmlQt(xmlLib):
                         qtObj.setText(labelValue.replace("\\n","\n"))
 
                 case "Title":
-                    if isinstance(qtObj, QMenu):
+                    if isinstance(qtObj, QMenu|QGroupBox):
                         qtObj.setTitle(labelValue)
 
                 case "WindowTitle":
@@ -135,10 +135,10 @@ class xmlQt(xmlLib):
                        
                 case "Enabled": qtObj.setEnabled(convertStr(labelValue).bool())
                 case "Hidden":
-                    if isinstance(qtObj, (QMenu|QTextEdit|QLabel|QPushButton|QCheckBox|QGroupBox|QComboBox|QRadioButton|QListWidget)) : 
+                    if isinstance(qtObj, (QMenu|QTextEdit|QLabel|QPushButton|QCheckBox|QGroupBox|QComboBox|QRadioButton|QListWidget|QGroupBox)) : 
                         qtObj.setHidden(convertStr(labelValue).bool())
                 case "Checked":
-                    if isinstance(qtObj, QCheckBox) :
+                    if isinstance(qtObj, QCheckBox|QRadioButton) :
                         qtObj.setChecked(convertStr(labelValue).bool())
                 case _: pass
         return
@@ -290,9 +290,10 @@ class xmlQMenuBar(xmlQt):
 
 class xmlQRadioButton(xmlQt):
     label:dict[str, str]= {}
-    def __init__(self, labelName = "",text = "", bEnabled = True, bHidden = False, qtObj:QRadioButton|None = None)-> None:
+    def __init__(self, labelName = "",text = "", bChecked = False, bEnabled = True, bHidden = False, qtObj:QRadioButton|None = None)-> None:
         super(xmlQRadioButton, self).__init__(labelName, "QRadioButton", qtObj=qtObj)
         self.label["Text"] = text
+        self.label["Checked"] = str(bChecked)
         self.label["Enabled"] = str(bEnabled)
         self.label["Hidden"] = str(bHidden)
         return
@@ -322,8 +323,10 @@ class xmlQTextEdit(xmlQt):
 class xmlQGroupBox(xmlQt):
     label:dict[str, str]= {}
     
-    def __init__(self,labelName = "", qtObj:QGroupBox|None = None)-> None:
-        super(xmlQGroupBox, self).__init__(labelName, "QGroupBox", qtObj=qtObj) 
+    def __init__(self,labelName = "",labeltitle:str = "", bHidden = False, qtObj:QGroupBox|None = None)-> None:
+        super(xmlQGroupBox, self).__init__(labelName, "QGroupBox", qtObj=qtObj)
+        self.label["Title"] = labeltitle
+        self.label["Hidden"] = str(bHidden)
         return
     
 
