@@ -108,7 +108,7 @@
     <txProducer>
       <Name>txProducer</Name>
       <QtWidget>QTextEdit</QtWidget>
-      <Text>パーソルクロステクノロジー</Text>
+      <Text>京セラ横浜事務所</Text>
       <Enabled>True</Enabled>
       <Hidden>False</Hidden>
     </txProducer>

@@ -136,20 +136,20 @@
     <rb8>
       <Name>rb8</Name>
       <QtWidget>QRadioButton</QtWidget>
-      <Text>rb8</Text>
+      <Text>rbEncrypt08</Text>
       <Enabled>True</Enabled>
       <Hidden>True</Hidden>
-      <Encrypt>rb8</Encrypt>
-      <Encrypt2>rb8</Encrypt2>
+      <Encrypt>rbEncrypt08</Encrypt>
+      <Encrypt2>rbEncrypt08</Encrypt2>
     </rb8>
     <rb9>
       <Name>rb9</Name>
       <QtWidget>QRadioButton</QtWidget>
-      <Text>rb9</Text>
+      <Text>rbEncrypt09</Text>
       <Enabled>True</Enabled>
       <Hidden>True</Hidden>
-      <Encrypt>rb9</Encrypt>
-      <Encrypt2>rb9</Encrypt2>
+      <Encrypt>rbEncrypt09</Encrypt>
+      <Encrypt2>rbEncrypt09</Encrypt2>
     </rb9>
     <rb10>
       <Name>rb10</Name>
@@ -350,20 +350,21 @@
       <cbPdfDocAttribSet>
         <Name>cbPdfDocAttribSet</Name>
         <QtWidget>QCheckBox</QtWidget>
-        <Checked>True</Checked>
+        <Checked>False</Checked>
         <Enabled>True</Enabled>
         <Hidden>False</Hidden>
       </cbPdfDocAttribSet>
       <btPdfDocAttribSet>
         <Name>btPdfDocAttribSet</Name>
         <QtWidget>QPushButton</QtWidget>
-        <Enabled>True</Enabled>
+        <Enabled>False</Enabled>
         <Hidden>False</Hidden>
       </btPdfDocAttribSet>
       <gbEncrypt>
         <Name>gbEncrypt</Name>
         <QtWidget>QGroupBox</QtWidget>
-        <gbEncryptName>暗号化設定</gbEncryptName>
+        <Title>暗号化設定</Title>
+        <Hidden>False</Hidden>
         <gbEncryptRbIndex>0</gbEncryptRbIndex>
       </gbEncrypt>
     </actionTool0>
@@ -489,20 +490,21 @@
       <cbPdfDocAttribSet>
         <Name>cbPdfDocAttribSet</Name>
         <QtWidget>QCheckBox</QtWidget>
-        <Checked>True</Checked>
+        <Checked>False</Checked>
         <Enabled>True</Enabled>
         <Hidden>False</Hidden>
       </cbPdfDocAttribSet>
       <btPdfDocAttribSet>
         <Name>btPdfDocAttribSet</Name>
         <QtWidget>QPushButton</QtWidget>
-        <Enabled>True</Enabled>
+        <Enabled>False</Enabled>
         <Hidden>False</Hidden>
       </btPdfDocAttribSet>
       <gbEncrypt>
         <Name>gbEncrypt</Name>
         <QtWidget>QGroupBox</QtWidget>
-        <gbEncryptName>暗号化設定</gbEncryptName>
+        <Title>暗号化設定</Title>
+        <Hidden>False</Hidden>
         <gbEncryptRbIndex>0</gbEncryptRbIndex>
       </gbEncrypt>
     </actionTool1>
@@ -628,7 +630,7 @@
       <cbPdfDocAttribSet>
         <Name>cbPdfDocAttribSet</Name>
         <QtWidget>QCheckBox</QtWidget>
-        <Checked>True</Checked>
+        <Checked>False</Checked>
         <Enabled>True</Enabled>
         <Hidden>False</Hidden>
       </cbPdfDocAttribSet>
@@ -641,7 +643,8 @@
       <gbEncrypt>
         <Name>gbEncrypt</Name>
         <QtWidget>QGroupBox</QtWidget>
-        <gbEncryptName>対象ファイルパスワード</gbEncryptName>
+        <Title>対象ファイルパスワード</Title>
+        <Hidden>False</Hidden>
         <gbEncryptRbIndex>0</gbEncryptRbIndex>
       </gbEncrypt>
     </actionTool2>
