@@ -1,7 +1,7 @@
 import sys
 import os
 
-from PyQt5.QtWidgets import QDialog,QApplication
+from PyQt5.QtWidgets import QDialog,QApplication, QWidget
 from PyQt5.QtGui import QCloseEvent
 
 from GUI.pdfEditerToolGUI import Ui_pdfEditerToolGUI
@@ -29,7 +29,7 @@ class Ui_pdfEditorTool(Ui_pdfEditerToolGUI):
         self.pdfETConfig = pdfEditerToolConfig(os.getcwd() + "\\config",self)
         return
     
-    def addUiSetting(self, pdfEditerTool) -> None:
+    def addUiSetting(self, pdfEditerTool:QWidget) -> None:
         """
         -----------------------------------------------------------------
         pdfEditorTool ui設定追加処理\n
