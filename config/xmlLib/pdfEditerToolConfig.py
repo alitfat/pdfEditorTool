@@ -155,6 +155,8 @@ class encryptButtonList(xmlLib):
     cbPdfDocAttribSet:xmlQCheckBox
     #btPdfDocAttribSet
     btPdfDocAttribSet:xmlQPushButton
+    #btPdfAuthorSet
+    btPdfAuthorSet:xmlQPushButton
     
     def __init__(self, pdfEditerToolGUI:Ui_pdfEditerToolGUI)-> None:
         
@@ -263,6 +265,11 @@ class encryptButtonList(xmlLib):
         self.btPdfDocAttribSetEnabled = True
         self.btPdfDocAttribSetHidden = False
         
+        #btPdfAuthorSet
+        self.btPdfAuthorSetName = "btPdfAuthorSet"
+        self.btPdfAuthorSetText = "PDFInfoSetting"
+        self.btPdfAuthorSetEnabled = True
+        self.btPdfAuthorSetHidden = False
         
         self.clearConfigSetting()
         self.createConfigSetting(pdfEditerToolGUI)
@@ -320,6 +327,13 @@ class encryptButtonList(xmlLib):
         self.btPdfDocAttribSet.delLabelProperty("Enabled")
         self.btPdfDocAttribSet.delLabelProperty("Hidden")
         
+        #btPdfAuthorSet
+        self.btPdfAuthorSet = xmlQPushButton(self.btPdfAuthorSetName,
+                                             self.btPdfAuthorSetText, 
+                                             self.btPdfAuthorSetEnabled,  
+                                             self.btPdfAuthorSetHidden)
+        self.btPdfAuthorSet.delLabelProperty("Hidden")
+        
         return
         
     def getConfigSetting(self, eleEncryptButtonList:Element|None)-> None:
@@ -343,6 +357,8 @@ class encryptButtonList(xmlLib):
         self.cbPdfDocAttribSet.getConfigSetting(eleEncryptButtonList, self.cbPdfDocAttribSetName)
         #btPdfDocAttribSet
         self.btPdfDocAttribSet.getConfigSetting(eleEncryptButtonList, self.btPdfDocAttribSetName)
+        #btPdfAuthorSet
+        self.btPdfAuthorSet.getConfigSetting(eleEncryptButtonList, self.btPdfAuthorSetName)
         
         return
           
@@ -365,6 +381,8 @@ class encryptButtonList(xmlLib):
         self.cbPdfDocAttribSet.outputConfigSetting(eleEncryptButton)
         #btPdfDocAttribSet
         self.btPdfDocAttribSet.outputConfigSetting(eleEncryptButton)
+        #btPdfAuthorSet
+        self.btPdfAuthorSet.outputConfigSetting(eleEncryptButton)
         
         return
     
@@ -399,6 +417,8 @@ class encryptButtonList(xmlLib):
         self.cbPdfDocAttribSet.updateConfigSetting(pdfEditerUi.cbPdfDocAttribSet)
         #btPdfDocAttribSet
         self.btPdfDocAttribSet.updateConfigSetting(pdfEditerUi.btPdfDocAttribSet)
+        #btPdfAuthorSet
+        self.btPdfAuthorSet.updateConfigSetting(pdfEditerUi.btPdfAuthorSet)
         
         
         return
@@ -439,7 +459,8 @@ class encryptButtonList(xmlLib):
         self.cbPdfDocAttribSet.updateGUISetting(pdfEditerUi.cbPdfDocAttribSet)
         #btPdfDocAttribSet
         self.btPdfDocAttribSet.updateGUISetting(pdfEditerUi.btPdfDocAttribSet)
-
+        #btPdfAuthorSet
+        self.btPdfAuthorSet.updateGUISetting(pdfEditerUi.btPdfAuthorSet)
 
         pdfEditerUi.menubar.activateWindow()
         return
@@ -574,7 +595,8 @@ class actionToolList(xmlLib):
     #btPdfDocAttribSet
     btPdfDocAttribSetList:list[xmlQPushButton]  =[]
     
-
+    #btPdfAuthorSet
+    btPdfAuthorSetList:list[xmlQPushButton]  =[]
     
     def __init__(self, parent:menubarList|None = None)-> None:
         super(actionToolList, self).__init__()
@@ -693,6 +715,12 @@ class actionToolList(xmlLib):
         self.btPdfDocAttribSetEnabled = [True, True, True]
         self.btPdfDocAttribSetHiddenList = [False, False, True]
         
+        #btPdfAuthorSet
+        self.btPdfAuthorSetName = "btPdfAuthorSet"
+        self.btPdfAuthorSetText = "PdfAuthorizationSetting"
+        self.btPdfAuthorSetEnabled = [True, True, True]
+        self.btPdfAuthorSetHiddenList = [False, False, True]
+        
         #gbEncrypt
         self.gbEncryptName = "gbEncrypt"
         self.gbEncryptNameList =  ["PasswordSetting", "PasswordSetting", "PasswordSetting"]
@@ -750,6 +778,8 @@ class actionToolList(xmlLib):
         self.cbPdfDocAttribSetList.clear()
         #btPdfDocAttribSet
         self.btPdfDocAttribSetList.clear()
+        #btPdfAuthorSet
+        self.btPdfAuthorSetList.clear()
         
         #gbEncrypt
         self.gbEncryptList.clear()
@@ -914,9 +944,19 @@ class actionToolList(xmlLib):
         xmlPushButton.delLabelProperty("Text")
         self.btPdfDocAttribSetList.append(xmlPushButton)
         
+        #btPdfAuthorSet
+        xmlPushButton = xmlQPushButton(self.btPdfAuthorSetName,
+                                       self.btPdfAuthorSetText[index], 
+                                       self.btPdfAuthorSetEnabled[index],  
+                                       self.btPdfAuthorSetHiddenList[index])
+        xmlPushButton.delLabelProperty("Text")
+        xmlPushButton.delLabelProperty("Enabled")
+        self.btPdfAuthorSetList.append(xmlPushButton)
+        
         
         #gbEncrypt
         gbEncrypt =  xmlQGroupBox(self.gbEncryptName, self.gbEncryptNameList[index])
+        gbEncrypt.delLabelProperty("Hidden")
         gbEncrypt.addLabelProperty("gbEncryptRbIndex", self.gbEncryptRbIndex[index])
         self.gbEncryptList.append(gbEncrypt)
         
@@ -985,6 +1025,9 @@ class actionToolList(xmlLib):
         
         #btPdfDocAttribSet
         self.btPdfDocAttribSetList[index].getConfigSetting(eleActionTool,self.btPdfDocAttribSetName)
+        
+        #btPdfAuthorSet
+        self.btPdfAuthorSetList[index].getConfigSetting(eleActionTool,self.btPdfAuthorSetName)
         
         #gbEncrypt
         self.gbEncryptList[index].getConfigSetting(eleActionTool,self.gbEncryptName)
@@ -1055,6 +1098,9 @@ class actionToolList(xmlLib):
         #btPdfDocAttribSet
         self.btPdfDocAttribSetList[index].outputConfigSetting(eleActionTool)
         
+        #btPdfAuthorSet
+        self.btPdfAuthorSetList[index].outputConfigSetting(eleActionTool)
+        
         #gbEncrypt
         self.gbEncryptList[index].outputConfigSetting(eleActionTool)
         
@@ -1109,6 +1155,9 @@ class actionToolList(xmlLib):
         
         #btPdfDocAttribSet
         self.btPdfDocAttribSetList[index].updateConfigSetting(pdfEditerUi.btPdfDocAttribSet)
+
+        #btPdfAuthorSet
+        self.btPdfAuthorSetList[index].updateConfigSetting(pdfEditerUi.btPdfAuthorSet)
 
         #gbEncrypt
         self.gbEncryptList[index].updateConfigSetting(pdfEditerUi.gbEncrypt)
@@ -1250,6 +1299,9 @@ class actionToolList(xmlLib):
         
         #btPdfDocAttribSet
         self.btPdfDocAttribSetList[index].updateGUISetting(pdfEditerUi.btPdfDocAttribSet)
+        
+        #btPdfAuthorSet
+        self.btPdfAuthorSetList[index].updateGUISetting(pdfEditerUi.btPdfAuthorSet)
 
         #gbEncrypt
         self.gbEncryptList[index].updateGUISetting(pdfEditerUi.gbEncrypt)
