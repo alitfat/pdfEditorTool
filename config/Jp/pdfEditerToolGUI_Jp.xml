@@ -194,6 +194,12 @@
       <QtWidget>QPushButton</QtWidget>
       <Text>PDF情報設定</Text>
     </btPdfDocAttribSet>
+    <btPdfAuthorSet>
+      <Name>btPdfAuthorSet</Name>
+      <QtWidget>QPushButton</QtWidget>
+      <Text>pdfファイル権限設定</Text>
+      <Enabled>True</Enabled>
+    </btPdfAuthorSet>
   </encryptNumberList>
   <!--【暗号化ラベル】GUI-->
   <algorithmLabelList>
@@ -350,21 +356,25 @@
       <cbPdfDocAttribSet>
         <Name>cbPdfDocAttribSet</Name>
         <QtWidget>QCheckBox</QtWidget>
-        <Checked>False</Checked>
+        <Checked>True</Checked>
         <Enabled>True</Enabled>
         <Hidden>False</Hidden>
       </cbPdfDocAttribSet>
       <btPdfDocAttribSet>
         <Name>btPdfDocAttribSet</Name>
         <QtWidget>QPushButton</QtWidget>
-        <Enabled>False</Enabled>
+        <Enabled>True</Enabled>
         <Hidden>False</Hidden>
       </btPdfDocAttribSet>
+      <btPdfAuthorSet>
+        <Name>btPdfAuthorSet</Name>
+        <QtWidget>QPushButton</QtWidget>
+        <Hidden>False</Hidden>
+      </btPdfAuthorSet>
       <gbEncrypt>
         <Name>gbEncrypt</Name>
         <QtWidget>QGroupBox</QtWidget>
         <Title>暗号化設定</Title>
-        <Hidden>False</Hidden>
         <gbEncryptRbIndex>0</gbEncryptRbIndex>
       </gbEncrypt>
     </actionTool0>
@@ -500,11 +510,15 @@
         <Enabled>False</Enabled>
         <Hidden>False</Hidden>
       </btPdfDocAttribSet>
+      <btPdfAuthorSet>
+        <Name>btPdfAuthorSet</Name>
+        <QtWidget>QPushButton</QtWidget>
+        <Hidden>False</Hidden>
+      </btPdfAuthorSet>
       <gbEncrypt>
         <Name>gbEncrypt</Name>
         <QtWidget>QGroupBox</QtWidget>
         <Title>暗号化設定</Title>
-        <Hidden>False</Hidden>
         <gbEncryptRbIndex>0</gbEncryptRbIndex>
       </gbEncrypt>
     </actionTool1>
@@ -640,11 +654,15 @@
         <Enabled>True</Enabled>
         <Hidden>False</Hidden>
       </btPdfDocAttribSet>
+      <btPdfAuthorSet>
+        <Name>btPdfAuthorSet</Name>
+        <QtWidget>QPushButton</QtWidget>
+        <Hidden>True</Hidden>
+      </btPdfAuthorSet>
       <gbEncrypt>
         <Name>gbEncrypt</Name>
         <QtWidget>QGroupBox</QtWidget>
         <Title>対象ファイルパスワード</Title>
-        <Hidden>False</Hidden>
         <gbEncryptRbIndex>0</gbEncryptRbIndex>
       </gbEncrypt>
     </actionTool2>
