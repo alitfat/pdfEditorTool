@@ -11,6 +11,7 @@ from Lib.FileSysProcess import FileSysProcess
 from Lib.QtLib import qtBoxLib, qtTextEdit
 from Lib.pdfFileLib import pdfFileLib
 from Lib.PdfInfoSetting import PdfInfoSetting
+from Lib.PdfUserAccessPermissions import PdfUserAccessPermissions
 from Lib.EncryptListSetting import EncryptListSetting
 from Lib.officeFile2pdfFileLib import office2PDFLib, eOfficeFileType
 from config.xmlLib.pdfEditerToolConfig import pdfEditerToolConfig
@@ -127,6 +128,7 @@ class pdfEditerTool(QDialog):
         # 本ツールソフトバジョンGUI画面設定
         self.verInfo = pdfEditorTool_VerGUI()
         self.pdfInfo = PdfInfoSetting()
+        self.pdfAccessPermiss = PdfUserAccessPermissions()
         self.EncryptList = EncryptListSetting(self.ui)
         #【officeFile⇒pdfFile変換】
         self.ui.pdfEditerToolType = 0
@@ -195,6 +197,9 @@ class pdfEditerTool(QDialog):
 
         # Pdf Information設定処理
         self.ui.btPdfDocAttribSet.clicked.connect(self.btPdfDocAttribSet_Click)
+
+        #Pdf権限設定処理
+        self.ui.btPdfAuthorSet.clicked.connect(self.btPdfAuthorSet_Click)
         return
 
 
@@ -526,21 +531,25 @@ class pdfEditerTool(QDialog):
         #PDF暗号化ラベル取得
         algText:str = self.ui.cmbPdfAlgorithm.currentText()
         self.encryptType = self.ui.pdfETConfig.algorithmLabelList.pdfAlgLabelList.get(algText, "AES-256")
+        pdfAccessPer = self.pdfAccessPermiss.getPdfAccessPermission()
         #PDFファイルへパスワードを追加
         self.pdfFileLib.AddEncrypt2pdfFile(pdfFileName = pdfFullFileName,
                                            user_password = self.encryptNumber,
                                            owner_password= self.encrypt2Number,
+                                           permissions_flag= pdfAccessPer,
                                            encryptType = self.encryptType)
         
         if self.ui.cbPdfDocAttribSet.isChecked():
             #pdf情報設定追加処理
             pdfMetaData = self.pdfInfo.getPdfMetadata()
+            
             self.pdfFileLib.update_metadata(src_path= pdfFullFileName,
                                             dst_path= pdfFullFileName,
                                             metadata= pdfMetaData,
                                             user_password= self.encryptNumber,
                                             owner_password= self.encrypt2Number,
-                                            encryptType= self.encryptType)
+                                            encryptType= self.encryptType,
+                                            permissions_flag= pdfAccessPer)
 
         msgTitle:str = self.ui.Form_SetWindowTitleList[self.ui.pdfEditerToolType]
         msgStr = self.ui.pdfETConfig.logList.logPdfConvertWithEncryptText
@@ -705,7 +714,7 @@ class pdfEditerTool(QDialog):
                                  self.ui.pdfETConfig.encryptButtonList.Encrypt2NumberList)
         return
     def actionOther_Click(self) -> None:
-        #self.pdfInfo.show()
+        #self.pdfAccessPermiss.show()
         return
     
     def btPdfDocAttribSet_Click(self) -> None:
@@ -717,7 +726,16 @@ class pdfEditerTool(QDialog):
         self.pdfInfo.showGUI()
 
         return
+    def btPdfAuthorSet_Click(self) -> None:
+        """
+        -----------------------------------------------------------------
+        Pdf権限設定処理\n
+        -----------------------------------------------------------------
+        """
+        self.pdfAccessPermiss.showGUI()
 
+        return
+    
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = pdfEditerTool()
