@@ -331,19 +331,7 @@ class office2PDFLib():
             selectSheetList = excelSheetFileList
         
         #全てのシートをループ
-        for sheetName in selectSheetList :
-            #ファイルを選択
-            application.Worksheets(sheetName).Activate()
-            activesheet = application.ActiveSheet
-            pdfFileWithSheetName = self.fsps.getRandomValue()
-            pdfFileWithSheetName = pdfFullFileAddr.replace('.pdf', '_' + pdfFileWithSheetName  + '.pdf')
-            
-            #PDF変換
-            try:
-                workbook.ActiveSheet.ExportAsFixedFormat(0, pdfFileWithSheetName)
-                pdfFileList.append(pdfFileWithSheetName)
-            except Exception as e:
-                pass
+        self.__SaveExcelFileSheets(workbook, application, pdfFileList, selectSheetList, pdfFullFileAddr)
 
         num = len(pdfFileList)
         if (num != 0 ):
@@ -358,8 +346,28 @@ class office2PDFLib():
         
         for pdfFileName in pdfFileList:
             self.fsps.delFile(pdfFileName)
-        
+
         return bResult
+    
+    def __SaveExcelFileSheets(self, workbook, application, pdfFileList: list[str], selectSheetList:list[str], pdfFullFileAddr: str)->None:
+        #全てのシートをループ
+        for sheetName in selectSheetList :
+            self.__SaveExcelFileSheet(workbook, application, pdfFileList, sheetName, pdfFullFileAddr)     
+        return
+
+    def __SaveExcelFileSheet(self,workbook, application, pdfFileList: list[str], sheetName:str, pdfFullFileAddr: str)->None:
+        #ファイルを選択
+        application.Worksheets(sheetName).Activate()
+        activesheet = application.ActiveSheet
+        pdfFileWithSheetName = self.fsps.getRandomValue()
+        pdfFileWithSheetName = pdfFullFileAddr.replace('.pdf', '_' + pdfFileWithSheetName  + '.pdf')
             
+        #PDF変換
+        try:
+            workbook.ActiveSheet.ExportAsFixedFormat(0, pdfFileWithSheetName)
+            pdfFileList.append(pdfFileWithSheetName)
+        except Exception as e:
+            pass
+        return
             
     
